@@ -1,0 +1,35 @@
+/* 
+	filename   : sableCC.ssc
+	created on : 21/05/2017
+	description:
+*/
+
+/* define package-prefix */
+Package sablecc_projeto;
+
+/* define token */
+Tokens
+add = '+';
+sub = '-';
+mul = '*';
+div = '/';
+left_paren = '(';
+right_paren = ')';
+number = [0-9]+;
+whitespace = (' ')+;
+
+/* Token to be ignored */
+Ignored Tokens
+whitespace;
+
+Productions
+expr = {add} [left]:expr add [right]:factor
+     | {sub} [left]:expr sub [right]:factor
+     | {factor} factor;
+
+factor = {mul} [left]:factor mul [right]:value
+        | {div} [left]:factor div [right]:value
+        | {value} value;
+
+value = {number} number
+      | {parens} left_paren expr right_paren;
